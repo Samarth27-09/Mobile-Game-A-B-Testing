@@ -1,4 +1,5 @@
 
+# Mobile Game A/B Test & User Retention Study
 
 
 This repository contains an end-to-end A/B testing and hypothesis testing workflow on a mobile game dataset (Cookie Cats).
