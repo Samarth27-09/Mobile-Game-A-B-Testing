@@ -1,4 +1,4 @@
-\# Mobile Game A/B Test \& User Retention Study
+# Mobile Game A/B Test & User Retention Study
 
 
 
@@ -12,45 +12,45 @@ The analysis focuses on how changing a game progression gate (from level 30 to l
 
 
 
-\## 1. Project Overview
+## 1. Project Overview
 
 
 
-\*\*Goal:\*\*
+**Goal:**
 
-Evaluate the impact of moving the first progression gate in a mobile puzzle game from \*\*level 30\*\* to \*\*level 40\*\* on:
-
-
-
-\* Total game rounds played in the first week
-
-\* Day-1 retention (did players return the next day?)
-
-\* Day-7 retention (did players return within a week?)
+Evaluate the impact of moving the first progression gate in a mobile puzzle game from **level 30** to **level 40** on:
 
 
 
-\*\*What this project demonstrates:\*\*
+* Total game rounds played in the first week
+
+* Day-1 retention (did players return the next day?)
+
+* Day-7 retention (did players return within a week?)
 
 
 
-\* Practical A/B testing on real product data
-
-\* Full statistical testing pipeline:
+**What this project demonstrates:**
 
 
 
-&nbsp; \* Normality checks (Shapiro–Wilk)
+* Practical A/B testing on real product data
 
-&nbsp; \* Variance homogeneity checks (Levene)
+* Full statistical testing pipeline:
 
-&nbsp; \* Parametric tests (t-test / Welch)
 
-&nbsp; \* Non-parametric test (Mann–Whitney U)
 
-\* Handling outliers and understanding player behavior
+&nbsp; * Normality checks (Shapiro–Wilk)
 
-\* Translating statistical results into product recommendations
+&nbsp; * Variance homogeneity checks (Levene)
+
+&nbsp; * Parametric tests (t-test / Welch)
+
+&nbsp; * Non-parametric test (Mann–Whitney U)
+
+* Handling outliers and understanding player behavior
+
+* Translating statistical results into product recommendations
 
 
 
@@ -58,7 +58,7 @@ The core analysis lives in the notebook:
 
 
 
-\* `notebooks/a-b-testing-step-by-step-hypothesis-testing.ipynb`
+* `notebooks/a-b-testing-step-by-step-hypothesis-testing.ipynb`
 
 
 
@@ -66,19 +66,19 @@ The core analysis lives in the notebook:
 
 
 
-\## 2. Business Problem
+## 2. Business Problem
 
 
 
-The game uses \*\*gates\*\* that slow player progression and can encourage in-app purchases.
+The game uses **gates** that slow player progression and can encourage in-app purchases.
 
-An experiment was run to test whether moving the \*\*first gate\*\*:
+An experiment was run to test whether moving the **first gate**:
 
 
 
-\* from \*\*level 30\*\* (control: `gate\_30`)
+* from **level 30** (control: `gate_30`)
 
-\* to \*\*level 40\*\* (treatment: `gate\_40`)
+* to **level 40** (treatment: `gate_40`)
 
 
 
@@ -90,11 +90,11 @@ Key questions:
 
 
 
-1\. Does changing the gate level alter total game rounds played?
+1. Does changing the gate level alter total game rounds played?
 
-2\. Does the change improve Day-1 and Day-7 retention?
+2. Does the change improve Day-1 and Day-7 retention?
 
-3\. Is any observed difference statistically significant or just noise?
+3. Is any observed difference statistically significant or just noise?
 
 
 
@@ -102,11 +102,11 @@ Key questions:
 
 
 
-\## 3. Dataset
+## 3. Dataset
 
 
 
-The dataset contains \*\*90,189 players\*\* who installed the game while the A/B test was running.
+The dataset contains **90,189 players** who installed the game while the A/B test was running.
 
 
 
@@ -116,13 +116,13 @@ The dataset contains \*\*90,189 players\*\* who installed the game while the A/B
 
 | `userid`         | int    | Unique identifier for each player                                 |
 
-| `version`        | object | Experimental group: `gate\_30` (control) or `gate\_40` (treatment)  |
+| `version`        | object | Experimental group: `gate_30` (control) or `gate_40` (treatment)  |
 
-| `sum\_gamerounds` | int    | Number of game rounds played in the first week after installation |
+| `sum_gamerounds` | int    | Number of game rounds played in the first week after installation |
 
-| `retention\_1`    | bool   | `True` if the player returned 1 day after install, else `False`   |
+| `retention_1`    | bool   | `True` if the player returned 1 day after install, else `False`   |
 
-| `retention\_7`    | bool   | `True` if the player returned 7 days after install, else `False`  |
+| `retention_7`    | bool   | `True` if the player returned 7 days after install, else `False`  |
 
 
 
@@ -134,7 +134,7 @@ Players are randomly assigned to one of the two gate versions, ensuring a valid 
 
 
 
-\## 4. Analysis Workflow (Notebook Structure)
+## 4. Analysis Workflow (Notebook Structure)
 
 
 
@@ -142,165 +142,165 @@ The notebook follows a clear, step-by-step structure:
 
 
 
-1\. \*\*Import Libraries\*\*
+1. **Import Libraries**
 
 
 
-&nbsp;  \* `numpy`, `pandas`, `seaborn`, `matplotlib`
+&nbsp;  * `numpy`, `pandas`, `seaborn`, `matplotlib`
 
-&nbsp;  \* `scipy.stats` (Shapiro–Wilk, Levene, t-test, Mann–Whitney U)
+&nbsp;  * `scipy.stats` (Shapiro–Wilk, Levene, t-test, Mann–Whitney U)
 
-&nbsp;  \* Display and warning configuration
+&nbsp;  * Display and warning configuration
 
 
 
-2\. \*\*Load Data\*\*
+2. **Load Data**
 
 
 
-&nbsp;  \* Custom `load(path, info=True)` function:
+&nbsp;  * Custom `load(path, info=True)` function:
 
 
 
-&nbsp;    \* Imports `.csv` or `.xlsx`
+&nbsp;    * Imports `.csv` or `.xlsx`
 
-&nbsp;    \* Prints dimensions, dtypes, missing values, and memory usage
+&nbsp;    * Prints dimensions, dtypes, missing values, and memory usage
 
-&nbsp;  \* Verifies there are \*\*no missing values\*\* and \*\*90,189 unique users\*\*
+&nbsp;  * Verifies there are **no missing values** and **90,189 unique users**
 
 
 
-3\. \*\*Summary Statistics\*\*
+3. **Summary Statistics**
 
 
 
-&nbsp;  \* Descriptive statistics for `sum\_gamerounds`:
+&nbsp;  * Descriptive statistics for `sum_gamerounds`:
 
 
 
-&nbsp;    \* Heavy right skew, with a very large maximum value
+&nbsp;    * Heavy right skew, with a very large maximum value
 
-&nbsp;  \* Group-level stats by `version` (gate\_30 vs gate\_40)
+&nbsp;  * Group-level stats by `version` (gate_30 vs gate_40)
 
-&nbsp;  \* Visualizations:
+&nbsp;  * Visualizations:
 
 
 
-&nbsp;    \* Histograms by group
+&nbsp;    * Histograms by group
 
-&nbsp;    \* Boxplots comparing distributions
+&nbsp;    * Boxplots comparing distributions
 
 
 
-4\. \*\*Outlier Handling\*\*
+4. **Outlier Handling**
 
 
 
-&nbsp;  \* Removes the single extreme outlier (`sum\_gamerounds` at the max)
+&nbsp;  * Removes the single extreme outlier (`sum_gamerounds` at the max)
 
-&nbsp;  \* Recomputes summary statistics and visualizations
+&nbsp;  * Recomputes summary statistics and visualizations
 
-&nbsp;  \* Updated distribution remains right-skewed but more stable
+&nbsp;  * Updated distribution remains right-skewed but more stable
 
 
 
-5\. \*\*Behavioral Insights ("Some Details")\*\*
+5. **Behavioral Insights ("Some Details")**
 
 
 
-&nbsp;  \* A substantial number of users install but never play:
+&nbsp;  * A substantial number of users install but never play:
 
 
 
-&nbsp;    \* 3,994 users with `sum\_gamerounds = 0`
+&nbsp;    * 3,994 users with `sum_gamerounds = 0`
 
-&nbsp;  \* Most players churn early, with counts decreasing sharply as rounds increase
+&nbsp;  * Most players churn early, with counts decreasing sharply as rounds increase
 
-&nbsp;  \* Explores:
+&nbsp;  * Explores:
 
 
 
-&nbsp;    \* Why players might churn quickly
+&nbsp;    * Why players might churn quickly
 
-&nbsp;    \* How difficulty, competing games, and in-game rewards might affect retention
+&nbsp;    * How difficulty, competing games, and in-game rewards might affect retention
 
-&nbsp;  \* Visualizations:
+&nbsp;  * Visualizations:
 
 
 
-&nbsp;    \* Number of users by `sum\_gamerounds` (full range and first 200 rounds)
+&nbsp;    * Number of users by `sum_gamerounds` (full range and first 200 rounds)
 
 
 
-6\. \*\*A/B Testing \& Hypothesis Testing\*\*
+6. **A/B Testing & Hypothesis Testing**
 
 
 
-&nbsp;  \* Re-labels groups:
+&nbsp;  * Re-labels groups:
 
 
 
-&nbsp;    \* `gate\_30 → A`
+&nbsp;    * `gate_30 → A`
 
-&nbsp;    \* `gate\_40 → B`
+&nbsp;    * `gate_40 → B`
 
-&nbsp;  \* Derived features:
+&nbsp;  * Derived features:
 
 
 
-&nbsp;    \* `Retention` (1 if retained at both Day 1 and Day 7, else 0)
+&nbsp;    * `Retention` (1 if retained at both Day 1 and Day 7, else 0)
 
-&nbsp;    \* `NewRetention` (string combination of `retention\_1` and `retention\_7`, e.g. `"True-False"`)
+&nbsp;    * `NewRetention` (string combination of `retention_1` and `retention_7`, e.g. `"True-False"`)
 
-&nbsp;  \* Grouped statistics:
+&nbsp;  * Grouped statistics:
 
 
 
-&nbsp;    \* Summary metrics by `version`, `retention\_1`, `retention\_7`, `Retention`, and `NewRetention`
+&nbsp;    * Summary metrics by `version`, `retention_1`, `retention_7`, `Retention`, and `NewRetention`
 
-&nbsp;  \* \*\*AB\_Test function\*\* encapsulates the full statistical pipeline:
+&nbsp;  * **AB_Test function** encapsulates the full statistical pipeline:
 
 
 
-&nbsp;    \* Split data into A and B
+&nbsp;    * Split data into A and B
 
-&nbsp;    \* Check normality (Shapiro–Wilk)
+&nbsp;    * Check normality (Shapiro–Wilk)
 
-&nbsp;    \* If both groups are normal:
+&nbsp;    * If both groups are normal:
 
 
 
-&nbsp;      \* Check variance homogeneity (Levene)
+&nbsp;      * Check variance homogeneity (Levene)
 
-&nbsp;      \* Use t-test (equal or unequal variance)
+&nbsp;      * Use t-test (equal or unequal variance)
 
-&nbsp;    \* Otherwise:
+&nbsp;    * Otherwise:
 
 
 
-&nbsp;      \* Use Mann–Whitney U test
+&nbsp;      * Use Mann–Whitney U test
 
-&nbsp;    \* Return:
+&nbsp;    * Return:
 
 
 
-&nbsp;      \* Test type (Parametric / Non-parametric)
+&nbsp;      * Test type (Parametric / Non-parametric)
 
-&nbsp;      \* p-value
+&nbsp;      * p-value
 
-&nbsp;      \* Decision on H0 (A = B)
+&nbsp;      * Decision on H0 (A = B)
 
-&nbsp;      \* Human-readable comment ("A/B groups are similar" / "not similar")
+&nbsp;      * Human-readable comment ("A/B groups are similar" / "not similar")
 
 
 
-7\. \*\*Conclusion\*\*
+7. **Conclusion**
 
 
 
-&nbsp;  \* Summarizes business context, methods, and statistical outcome
+&nbsp;  * Summarizes business context, methods, and statistical outcome
 
-&nbsp;  \* Provides a product recommendation based on the results
+&nbsp;  * Provides a product recommendation based on the results
 
 
 
@@ -308,57 +308,57 @@ The notebook follows a clear, step-by-step structure:
 
 
 
-\## 5. Key Results
+## 5. Key Results
 
 
 
-\### Data and Retention
+### Data and Retention
 
 
 
-\* No missing values in the dataset.
+* No missing values in the dataset.
 
-\* Many players never meaningfully engage (e.g., 3,994 users with 0 rounds).
+* Many players never meaningfully engage (e.g., 3,994 users with 0 rounds).
 
-\* Churn is high:
-
-
-
-&nbsp; \* ~55% do not return on \*\*Day 1\*\*
-
-&nbsp; \* ~81% do not return by \*\*Day 7\*\*
-
-\* Roughly \*\*14%\*\* of users play both on Day 1 and Day 7, indicating potential long-term players.
+* Churn is high:
 
 
 
-\### A/B Test Outcome
+&nbsp; * ~55% do not return on **Day 1**
+
+&nbsp; * ~81% do not return by **Day 7**
+
+* Roughly **14%** of users play both on Day 1 and Day 7, indicating potential long-term players.
 
 
 
-\* The distribution of `sum\_gamerounds` is \*\*not normal\*\*, so a \*\*non-parametric Mann–Whitney U test\*\* is appropriate.
-
-\* The test yields:
+### A/B Test Outcome
 
 
 
-&nbsp; \* p-value ≈ \*\*0.025\*\*
+* The distribution of `sum_gamerounds` is **not normal**, so a **non-parametric Mann–Whitney U test** is appropriate.
 
-&nbsp; \* Decision: \*\*Reject H0\*\* → A/B groups differ statistically.
-
-\* Retention comparison:
+* The test yields:
 
 
 
-&nbsp; \* Day-1 retention is slightly higher for the gate at \*\*level 30\*\*.
+&nbsp; * p-value ≈ **0.025**
 
-&nbsp; \* Day-7 retention is also slightly higher for the gate at \*\*level 30\*\*.
+&nbsp; * Decision: **Reject H0** → A/B groups differ statistically.
+
+* Retention comparison:
 
 
 
-\*\*Interpretation:\*\*
+&nbsp; * Day-1 retention is slightly higher for the gate at **level 30**.
 
-Within this experiment, keeping the gate at \*\*level 30\*\* appears \*\*better or at least safer\*\* for player retention and engagement than moving it to level 40.
+&nbsp; * Day-7 retention is also slightly higher for the gate at **level 30**.
+
+
+
+**Interpretation:**
+
+Within this experiment, keeping the gate at **level 30** appears **better or at least safer** for player retention and engagement than moving it to level 40.
 
 However, retentions are close, and additional data or follow-up experiments would help confirm long-term effects.
 
@@ -368,7 +368,7 @@ However, retentions are close, and additional data or follow-up experiments woul
 
 
 
-\## 6. A/B Testing Methodology
+## 6. A/B Testing Methodology
 
 
 
@@ -376,61 +376,61 @@ The project uses a standard, reusable A/B testing framework:
 
 
 
-1\. \*\*Define hypotheses\*\*
+1. **Define hypotheses**
 
 
 
-&nbsp;  \* H0: Metric for group A = Metric for group B
+&nbsp;  * H0: Metric for group A = Metric for group B
 
-&nbsp;  \* H1: Metric for group A ≠ Metric for group B
-
-
-
-2\. \*\*Check assumptions\*\*
+&nbsp;  * H1: Metric for group A ≠ Metric for group B
 
 
 
-&nbsp;  \* Normality (Shapiro–Wilk) for each group
-
-&nbsp;  \* If normal:
+2. **Check assumptions**
 
 
 
-&nbsp;    \* Variance homogeneity (Levene)
+&nbsp;  * Normality (Shapiro–Wilk) for each group
 
-&nbsp;    \* Choose between t-test (equal variances) or Welch t-test (unequal variances)
-
-&nbsp;  \* If non-normal:
+&nbsp;  * If normal:
 
 
 
-&nbsp;    \* Use Mann–Whitney U test directly
+&nbsp;    * Variance homogeneity (Levene)
+
+&nbsp;    * Choose between t-test (equal variances) or Welch t-test (unequal variances)
+
+&nbsp;  * If non-normal:
 
 
 
-3\. \*\*Compute p-value\*\*
+&nbsp;    * Use Mann–Whitney U test directly
 
 
 
-&nbsp;  \* Compare p-value to α (0.05)
-
-&nbsp;  \* Reject or fail to reject H0
+3. **Compute p-value**
 
 
 
-4\. \*\*Translate to business decision\*\*
+&nbsp;  * Compare p-value to α (0.05)
+
+&nbsp;  * Reject or fail to reject H0
 
 
 
-&nbsp;  \* Move from “p = 0.025” to:
+4. **Translate to business decision**
 
 
 
-&nbsp;    \* “Gate at level 30 performs better in terms of engagement and retention under current data.”
+&nbsp;  * Move from “p = 0.025” to:
 
 
 
-The `AB\_Test` helper function makes this process reusable for other metrics and experiments.
+&nbsp;    * “Gate at level 30 performs better in terms of engagement and retention under current data.”
+
+
+
+The `AB_Test` helper function makes this process reusable for other metrics and experiments.
 
 
 
@@ -438,7 +438,7 @@ The `AB\_Test` helper function makes this process reusable for other metrics and
 
 
 
-\## 7. Project Structure
+## 7. Project Structure
 
 
 
@@ -452,7 +452,7 @@ Recommended minimal structure:
 
 ├─ data/
 
-│  └─ cookie\_cats.csv
+│  └─ cookie_cats.csv
 
 │
 
@@ -474,11 +474,11 @@ Recommended minimal structure:
 
 
 
-\## 8. How to Run the Analysis
+## 8. How to Run the Analysis
 
 
 
-1\. \*\*Clone the repository\*\*
+1. **Clone the repository**
 
 
 
@@ -492,7 +492,7 @@ cd <your-repo-folder>
 
 
 
-2\. \*\*Create and activate a virtual environment (optional but recommended)\*\*
+2. **Create and activate a virtual environment (optional but recommended)**
 
 
 
@@ -500,15 +500,15 @@ cd <your-repo-folder>
 
 python -m venv venv
 
-venv\\Scripts\\activate  # On Windows
+venvScriptsactivate  # On Windows
 
-\# source venv/bin/activate  # On macOS/Linux
+# source venv/bin/activate  # On macOS/Linux
 
 ```
 
 
 
-3\. \*\*Install dependencies\*\*
+3. **Install dependencies**
 
 
 
@@ -542,7 +542,7 @@ jupyter
 
 
 
-4\. \*\*Launch Jupyter Notebook\*\*
+4. **Launch Jupyter Notebook**
 
 
 
@@ -558,7 +558,7 @@ Then open:
 
 
 
-\* `notebooks/a-b-testing-step-by-step-hypothesis-testing.ipynb`
+* `notebooks/a-b-testing-step-by-step-hypothesis-testing.ipynb`
 
 
 
@@ -570,7 +570,7 @@ and run all cells.
 
 
 
-\## 9. Learning Resources
+## 9. Learning Resources
 
 
 
@@ -580,27 +580,27 @@ Helpful external resources include:
 
 
 
-\* \*\*DataCamp\*\*
+* **DataCamp**
 
 
 
-&nbsp; \* Mobile Games A/B Testing with Cookie Cats
+&nbsp; * Mobile Games A/B Testing with Cookie Cats
 
-&nbsp; \* A/B Testing in R
+&nbsp; * A/B Testing in R
 
-&nbsp; \* Customer Analytics and A/B Testing in Python
-
-
-
-\* \*\*Udacity\*\*
+&nbsp; * Customer Analytics and A/B Testing in Python
 
 
 
-&nbsp; \* A/B Testing by Google – Online Experiment Design and Analysis
+* **Udacity**
 
-&nbsp; \* Intro to Inferential Statistics
 
-&nbsp; \* Statistics – The Science of Decisions
+
+&nbsp; * A/B Testing by Google – Online Experiment Design and Analysis
+
+&nbsp; * Intro to Inferential Statistics
+
+&nbsp; * Statistics – The Science of Decisions
 
 
 
@@ -612,13 +612,13 @@ These courses reinforce topics such as hypothesis testing, bootstrap analysis, e
 
 
 
-\## 10. Acknowledgements
+## 10. Acknowledgements
 
 
 
-\* Original dataset and inspiration from \*\*Aurelia Sui (@yufengsui)\*\* and the \*\*DataCamp\*\* Cookie Cats A/B testing project.
+* Original dataset and inspiration from **Aurelia Sui (@yufengsui)** and the **DataCamp** Cookie Cats A/B testing project.
 
-\* Cookie Cats is developed by \*\*Tactile Entertainment\*\*; all game-related assets and branding belong to their respective owners.
+* Cookie Cats is developed by **Tactile Entertainment**; all game-related assets and branding belong to their respective owners.
 
 
 
