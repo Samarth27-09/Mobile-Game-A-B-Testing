@@ -1,4 +1,3 @@
-# Mobile Game A/B Test & User Retention Study
 
 
 
