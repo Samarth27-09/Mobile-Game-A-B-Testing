@@ -1,4 +1,4 @@
-\# Mobile Game A/B Test \& User Retention Study
+# Mobile Game A/B Test \& User Retention Study
 
 
 
@@ -12,7 +12,7 @@ The analysis focuses on how changing a game progression gate (from level 30 to l
 
 
 
-\## 1. Project Overview
+## 1. Project Overview
 
 
 
